@@ -2,8 +2,12 @@ import { plugins, applyPlugins, parse } from "parse-commit-message";
 import getRawCommit from "./get-raw-commit";
 
 async function parseCommit(rawMessage: string) {
-  const commit = await parse(rawMessage);
-  return applyPlugins(plugins, commit)[0];
+  try {
+    const commit = await parse(rawMessage);
+    return applyPlugins(plugins, commit)[0];
+  } catch (error) {
+    return {};
+  }
 }
 
 export default async function* walkCommits() {
