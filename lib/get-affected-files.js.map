@@ -1,0 +1,1 @@
+{"version":3,"file":"get-affected-files.js","sourceRoot":"","sources":["../src/get-affected-files.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA,kDAA0B;AAE1B,SAA8B,gBAAgB,CAAC,IAAY;;QACzD,MAAM,EAAE,MAAM,EAAE,GAAG,MAAM,eAAK,CAAC,KAAK,EAAE;YACpC,WAAW;YACX,gBAAgB;YAChB,aAAa;YACb,IAAI;YACJ,IAAI;SACL,CAAC,CAAC;QAEH,OAAO,MAAM,CAAC,KAAK,CAAC,IAAI,CAAC,CAAC;IAC5B,CAAC;CAAA;AAVD,mCAUC"}
