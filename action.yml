@@ -1,6 +1,10 @@
 name: "Semantic Monorepo"
 description: "Automated releases for multipackage monorepo"
 author: "Maciek Pekala"
+branding:
+  icon: "package"
+  color: "purple"
+
 inputs:
   myInput:
     description: "Input to use"
