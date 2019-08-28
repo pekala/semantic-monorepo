@@ -23,6 +23,7 @@
   "dependencies": {
     "@actions/core": "^1.0.0",
     "@actions/github": "^1.0.0",
+    "@octokit/rest": "^16.28.7",
     "execa": "^2.0.4",
     "glob": "^7.1.4",
     "parse-commit-message": "^3.2.3"
