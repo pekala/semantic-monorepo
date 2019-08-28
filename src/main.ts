@@ -1,6 +1,7 @@
 import * as core from "@actions/core";
 import walkCommits from "./walk-commits";
 import { Increment, CommitDescription } from "types";
+import bumpPkgVersion from "./bump-package-version";
 const BUMPS: Increment[] = [false, "patch", "minor", "major"];
 
 async function run() {
@@ -27,8 +28,8 @@ async function run() {
 
     for await (let pkgDir of Object.keys(byPkg)) {
       console.log("Bump pkg version", pkgDir, byPkg[pkgDir].increment);
+      const tag = await bumpPkgVersion(pkgDir, byPkg[pkgDir].increment);
       console.log("Make a release", byPkg[pkgDir].commits);
-      // const tag = await bumpPkgVersions(pkgDir, byPkg[pkgDir].increment);
       // await createGithubRelease(tag, byPkg[pkgDir].commits);
     }
 
