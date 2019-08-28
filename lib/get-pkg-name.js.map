@@ -1,0 +1,1 @@
+{"version":3,"file":"get-pkg-name.js","sourceRoot":"","sources":["../src/get-pkg-name.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;AAAA,gDAAwB;AAExB,SAA8B,UAAU,CAAC,MAAc;;QACrD,MAAM,WAAW,GAAG,cAAI,CAAC,OAAO,CAC9B,OAAO,CAAC,GAAG,CAAC,gBAAgB,EAC5B,MAAM,EACN,cAAc,CACf,CAAC;QACF,MAAM,OAAO,GAAG,wDAAa,WAAW,GAAC,CAAC;QAC1C,OAAO,OAAO,CAAC,IAAI,CAAC;IACtB,CAAC;CAAA;AARD,6BAQC"}

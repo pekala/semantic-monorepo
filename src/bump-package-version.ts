@@ -2,7 +2,6 @@ import path from "path";
 import execa from "execa";
 import getPkgName from "./get-pkg-name";
 import { Increment } from "types";
-import pkgJSON from "../package.json";
 
 export default async function bumpPkgVersion(
   pkgDir: string,
@@ -24,7 +23,7 @@ export default async function bumpPkgVersion(
   await execa("git", [
     "push",
     "--follow-tags",
-    `https://x-access-token:${process.env.GITHUB_TOKEN}@github.com/${pkgJSON.repository}.git`
+    `https://x-access-token:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`
   ]);
   const { stdout: tag } = await execa("git", [
     "describe",

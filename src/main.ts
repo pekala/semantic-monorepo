@@ -29,6 +29,7 @@ async function run() {
     for await (let pkgDir of Object.keys(byPkg)) {
       console.log("Bump pkg version", pkgDir, byPkg[pkgDir].increment);
       const tag = await bumpPkgVersion(pkgDir, byPkg[pkgDir].increment);
+      console.log("published!", tag);
       console.log("Make a release", byPkg[pkgDir].commits);
       // await createGithubRelease(tag, byPkg[pkgDir].commits);
     }
