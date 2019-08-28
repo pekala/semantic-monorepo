@@ -1,7 +1,11 @@
 import path from "path";
+import fs from "fs";
+import { promisify } from "util";
 import execa from "execa";
 import getPkgName from "./get-pkg-name";
 import { Increment } from "types";
+
+const writeFile = promisify(fs.writeFile);
 
 export default async function bumpPkgVersion(
   pkgDir: string,
@@ -12,7 +16,12 @@ export default async function bumpPkgVersion(
   }
   const pkgName = await getPkgName(pkgDir);
   const cwd = path.resolve(process.env.GITHUB_WORKSPACE, pkgDir);
-  console.log(pkgName, cwd);
+
+  await writeFile(
+    path.resolve(cwd, ".npmrc"),
+    `//npm.pkg.github.com/:_authToken=${process.env.GITHUB_TOKEN}`
+  );
+
   await execa("yarn", ["version", `--${increment}`], {
     cwd,
     env: {
