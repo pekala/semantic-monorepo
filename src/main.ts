@@ -36,6 +36,7 @@ async function run() {
 
     return byPkg;
   } catch (error) {
+    console.error(error);
     core.setFailed(error.message);
   }
 }

@@ -12,7 +12,7 @@ export default async function bumpPkgVersion(
   }
   const pkgName = await getPkgName(pkgDir);
   const cwd = path.resolve(process.env.GITHUB_WORKSPACE, pkgDir);
-  console.log(cwd);
+  console.log(pkgName, cwd);
   await execa("yarn", ["version", `--${increment}`], {
     cwd,
     env: {
