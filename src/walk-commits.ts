@@ -2,13 +2,21 @@ import { plugins, applyPlugins, parse } from "parse-commit-message";
 import getRawCommit from "./get-raw-commit";
 import getAffectedFiles from "./get-affected-files";
 import getAffectedPkgs from "./get-affected-pkgs";
+import { Increment } from "types";
 
 async function parseCommit(rawMessage: string) {
   try {
     const commit = await parse(rawMessage);
     return applyPlugins(plugins, commit)[0];
   } catch (error) {
-    return {};
+    return {
+      header: {
+        type: "invalid",
+        subject: rawMessage
+      },
+      increment: false as Increment,
+      isBreaking: false
+    };
   }
 }
 
@@ -19,9 +27,9 @@ export default async function* walkCommits() {
       const { hash, rawMessage } = await getRawCommit(cursor);
       const commit = await parseCommit(rawMessage);
       const affectedFiles = await getAffectedFiles(hash);
-      const affectedPackages = await getAffectedPkgs(affectedFiles);
+      const affectedPkgs = await getAffectedPkgs(affectedFiles);
 
-      yield { hash, commit, affectedFiles, affectedPackages };
+      yield { hash, commit, affectedFiles, affectedPkgs };
       cursor = `${hash}^1`;
     } catch (error) {
       if (error.exitCode === 128) {
