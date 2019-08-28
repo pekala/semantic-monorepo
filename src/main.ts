@@ -3,7 +3,7 @@ import walkCommits from "./walk-commits";
 import { Increment, CommitDescription } from "types";
 import bumpPkgVersion from "./bump-package-version";
 import createGithubRelease from "./create-github-release";
-const BUMPS: Increment[] = [false, "patch", "minor", "major"];
+const BUMPS: Increment[] = [false, "patch", "minor", "major", "init"];
 
 async function run() {
   try {

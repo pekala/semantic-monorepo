@@ -31,6 +31,9 @@ export default async function* walkCommits() {
         return;
       }
 
+      if (commit.header.scope === "init") {
+        commit.increment = "init";
+      }
       const affectedFiles = await getAffectedFiles(hash);
       const affectedPkgs = await getAffectedPkgs(affectedFiles);
 
