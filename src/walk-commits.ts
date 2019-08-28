@@ -26,6 +26,11 @@ export default async function* walkCommits() {
     try {
       const { hash, rawMessage } = await getRawCommit(cursor);
       const commit = await parseCommit(rawMessage);
+
+      if (commit.header.scope === "release" && commit.header.type === "chore") {
+        return;
+      }
+
       const affectedFiles = await getAffectedFiles(hash);
       const affectedPkgs = await getAffectedPkgs(affectedFiles);
 
