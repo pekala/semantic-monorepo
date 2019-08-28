@@ -28,6 +28,11 @@ async function run() {
     }
 
     for await (let pkgDir of Object.keys(byPkg)) {
+      console.log({
+        pkgDir,
+        increment: byPkg[pkgDir].increment,
+        commits: byPkg[pkgDir].commits
+      });
       const tag = await bumpPkgVersion(pkgDir, byPkg[pkgDir].increment);
       await createGithubRelease(tag, byPkg[pkgDir].commits);
     }
