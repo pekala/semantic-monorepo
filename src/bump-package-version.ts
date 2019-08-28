@@ -38,7 +38,7 @@ export default async function bumpPkgVersion(
     "push",
     "--follow-tags",
     `https://x-access-token:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`,
-    "HEAD:master"
+    `HEAD:${process.env.GITHUB_REF}`
   ]);
   const { stdout: tag } = await execa("git", [
     "describe",
