@@ -1,0 +1,1 @@
+{"version":3,"file":"get-pkg-json.js","sourceRoot":"","sources":["../src/get-pkg-json.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;AAAA,gDAAwB;AAExB,SAA8B,UAAU,CAAC,MAAc;;QACrD,MAAM,WAAW,GAAG,cAAI,CAAC,OAAO,CAC9B,OAAO,CAAC,GAAG,CAAC,gBAAgB,EAC5B,MAAM,EACN,cAAc,CACf,CAAC;QACF,OAAO,wDAAa,WAAW,GAAC,CAAC;IACnC,CAAC;CAAA;AAPD,6BAOC"}

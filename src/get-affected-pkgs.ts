@@ -9,10 +9,10 @@ function isInDirectory(directory: string, file: string) {
 }
 
 export default async function getAffectedPkgs(affectedFiles: string[]) {
-  const pkgJSON = await import(
+  const repoPkgJSON = await import(
     path.resolve(process.env.GITHUB_WORKSPACE, "package.json")
   );
-  const pkgDirs = await asyncGlob(pkgJSON.workspaces[0]);
+  const pkgDirs = await asyncGlob(repoPkgJSON.workspaces[0]);
 
   const getAffectedPkg = (file: string) =>
     pkgDirs.find(pkgDir => isInDirectory(pkgDir, file));

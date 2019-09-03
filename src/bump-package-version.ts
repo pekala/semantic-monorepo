@@ -3,6 +3,7 @@ import fs from "fs";
 import { promisify } from "util";
 import execa from "execa";
 import { Increment } from "types";
+import getPkgJSON from "./get-pkg-json";
 
 const writeFile = promisify(fs.writeFile);
 
@@ -13,12 +14,7 @@ export default async function bumpPkgVersion(
   if (increment === false) {
     return;
   }
-  const pkgJSONPath = path.resolve(
-    process.env.GITHUB_WORKSPACE,
-    pkgDir,
-    "package.json"
-  );
-  const pkgJSON = await import(pkgJSONPath);
+  const pkgJSON = await getPkgJSON(pkgDir);
   const cwd = path.resolve(process.env.GITHUB_WORKSPACE, pkgDir);
 
   await writeFile(
@@ -47,7 +43,7 @@ export default async function bumpPkgVersion(
     }
   );
   await execa("yarn", ["publish", `--non-interactive`], { cwd });
-  const updatedPkgJson = await import(pkgJSONPath);
+  const updatedPkgJson = await getPkgJSON(pkgDir);
   const repoUrl = `https://x-access-token:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
   await execa("git", ["push", repoUrl, `:refs/tags/${updatedPkgJson.version}`]);
   await execa("git", [
@@ -56,10 +52,4 @@ export default async function bumpPkgVersion(
     repoUrl,
     `HEAD:${process.env.GITHUB_REF}`
   ]);
-  const { stdout: tag } = await execa("git", [
-    "describe",
-    "--abbrev=0",
-    "--tags"
-  ]);
-  return tag;
 }

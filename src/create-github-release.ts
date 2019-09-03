@@ -1,5 +1,6 @@
 import { CommitDescription } from "types";
 import Octokit from "@octokit/rest";
+import getPkgJSON from "./get-pkg-json";
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
 const getCommitDescLine = (commitDesc: CommitDescription) => {
@@ -20,15 +21,16 @@ const getCommitDescLine = (commitDesc: CommitDescription) => {
 };
 
 export default async function createGithubRelease(
-  tag: string,
+  pkgDir: string,
   commitDescs: CommitDescription[]
 ) {
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
+  const pkgJSON = await getPkgJSON(pkgDir);
 
-  octokit.repos.createRelease({
+  await octokit.repos.createRelease({
     owner,
     repo,
-    tag_name: tag,
+    tag_name: `${pkgJSON.name}@v${pkgJSON.version}`,
     body: commitDescs
       .filter(commitDesc => commitDesc.commit.increment)
       .map(getCommitDescLine)
