@@ -43,13 +43,11 @@ export default async function bumpPkgVersion(
     }
   );
   await execa("yarn", ["publish", `--non-interactive`], { cwd });
-  const updatedPkgJson = await getPkgJSON(pkgDir);
-  const repoUrl = `https://x-access-token:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
-  await execa("git", ["push", repoUrl, `:refs/tags/${updatedPkgJson.version}`]);
+
   await execa("git", [
     "push",
     "--follow-tags",
-    repoUrl,
+    `https://x-access-token:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`,
     `HEAD:${process.env.GITHUB_REF}`
   ]);
 }
