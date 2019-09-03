@@ -1,4 +1,8 @@
+import fs from "fs";
 import path from "path";
+import { promisify } from "util";
+
+const readFile = promisify(fs.readFile);
 
 export default async function getPkgJSON(pkgDir: string) {
   const pkgJSONPath = path.resolve(
@@ -6,5 +10,6 @@ export default async function getPkgJSON(pkgDir: string) {
     pkgDir,
     "package.json"
   );
-  return await import(pkgJSONPath);
+  const rawJSON = await readFile(pkgJSONPath, "utf8");
+  return JSON.parse(rawJSON);
 }
