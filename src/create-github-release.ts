@@ -29,21 +29,25 @@ export default async function createGithubRelease(
   const pkgJSON = await getPkgJSON(pkgDir);
 
   // undo GH damage
-  const excessRelease = await octokit.repos.getReleaseByTag({
-    owner,
-    repo,
-    tag: pkgJSON.version
-  });
-  await octokit.repos.deleteRelease({
-    owner,
-    repo,
-    release_id: excessRelease.data.id
-  });
-  await execa("git", [
-    "push",
-    `https://x-access-token:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`,
-    `:refs/tags/${pkgJSON.version}`
-  ]);
+  try {
+    const excessRelease = await octokit.repos.getReleaseByTag({
+      owner,
+      repo,
+      tag: pkgJSON.version
+    });
+    await octokit.repos.deleteRelease({
+      owner,
+      repo,
+      release_id: excessRelease.data.id
+    });
+    await execa("git", [
+      "push",
+      `https://x-access-token:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`,
+      `:refs/tags/${pkgJSON.version}`
+    ]);
+  } catch (error) {
+    console.error("Could not cleanup GH tags/releases", error);
+  }
   // end undo GH damage
 
   await octokit.repos.createRelease({

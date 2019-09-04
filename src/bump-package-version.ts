@@ -11,9 +11,6 @@ export default async function bumpPkgVersion(
   pkgDir: string,
   increment: Increment
 ) {
-  if (increment === false) {
-    return;
-  }
   const pkgJSON = await getPkgJSON(pkgDir);
   const cwd = path.resolve(process.env.GITHUB_WORKSPACE, pkgDir);
 

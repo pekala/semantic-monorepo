@@ -28,8 +28,10 @@ async function run() {
     }
 
     for await (let pkgDir of Object.keys(byPkg)) {
-      await bumpPkgVersion(pkgDir, byPkg[pkgDir].increment);
-      await createGithubRelease(pkgDir, byPkg[pkgDir].commits);
+      if (byPkg[pkgDir].increment) {
+        await bumpPkgVersion(pkgDir, byPkg[pkgDir].increment);
+        await createGithubRelease(pkgDir, byPkg[pkgDir].commits);
+      }
     }
 
     return byPkg;
